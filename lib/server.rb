@@ -2,6 +2,7 @@ require 'bundler/setup'
 bundle_environments = [:default, ENV['RACK_ENV']].reject(&:nil?)
 Bundler.require(*bundle_environments)
 
+module ServiceHealthRegistry
 class Server < Sinatra::Base
   set :bind, '0.0.0.0'
 

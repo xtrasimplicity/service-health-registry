@@ -1,3 +1,3 @@
-require_relative 'lib/application'
+require_relative 'lib/server'
 
-Server.run!
+ServiceHealthRegistry::Server.run!
