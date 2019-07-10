@@ -1,7 +1,10 @@
 require 'bundler/setup'
-Bundler.require(:default, ENV['RACK_ENV'])
+bundle_environments = [:default, ENV['RACK_ENV']].reject(&:nil?)
+Bundler.require(*bundle_environments)
 
 class Server < Sinatra::Base
+  set :bind, '0.0.0.0'
+
   get '/get/:app_name/:sensor_name' do
     'TBC'
   end
