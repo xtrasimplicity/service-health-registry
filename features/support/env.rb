@@ -1,5 +1,8 @@
 ENV['RACK_ENV'] = 'test'
 
+require 'simplecov'
+SimpleCov.start
+
 require File.expand_path('../../../lib/application', __FILE__)
 
 require 'capybara/cucumber'

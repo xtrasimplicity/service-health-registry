@@ -12,4 +12,5 @@ group :test do
   gem 'byebug'
   gem 'rest-client'
   gem 'rspec-expectations'
+  gem 'simplecov'
 end
