@@ -5,10 +5,9 @@ SimpleCov.start
 
 require File.expand_path('../../../lib/server', __FILE__)
 
-require 'capybara/cucumber'
-Capybara.app = ServiceHealthRegistry::Server
-
 Before do
+  ServiceHealthRegistry::Service.destroy_all!
+
   Thread.new do
     ServiceHealthRegistry::Server.run!
   end
