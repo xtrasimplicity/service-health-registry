@@ -1,24 +1,13 @@
-module HTTPHelper
-  def post_request(path, payload, headers = {})
-    RestClient.post(build_url(path), payload, {}) {|response, request, result| response }
-  end
-
-  def get_request(path)
-    RestClient.get(build_url(path)) {|response, request, result| response }
-  end
-
-  private
-
-  def build_url(path)
-    "http://127.0.0.1:#{ServiceHealthRegistry::Server.port}#{path}"
-  end
-end
-World(HTTPHelper)
-
 Given("I send a POST request to {string} with a JSON payload of:") do |path, stringified_json_payload|
   payload = JSON.parse(stringified_json_payload)
+  @http_headers ||= {}
 
-  @http_request = post_request(path, payload)
+  @http_request = post_request(path, payload, @http_headers)
+end
+
+When("I set the X-AuthToken header value to {string}") do |value|
+  @http_headers ||= {}
+  @http_headers['X-AuthToken'] = value
 end
 
 When("I visit {string}") do |path|

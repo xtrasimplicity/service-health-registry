@@ -1,6 +1,9 @@
-Feature: Registering services
+Feature: Registering services as an authorised user
     In order to be able to be able to set/retrieve information regarding an application/service's sensors, we first need to make sure that it is registered. We can do this by sending a POST request to the service registration endpoint.
 
+  Background:
+    Given the admin authentication token is 'SomeSecretToken'
+    And I set the X-AuthToken header value to 'SomeSecretToken'
 
   Scenario: The service does not exist
     Given there isn't a registered service named 'MyService'

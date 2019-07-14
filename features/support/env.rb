@@ -3,6 +3,7 @@ ENV['RACK_ENV'] = 'test'
 require 'simplecov'
 SimpleCov.start
 
+ENV['ADMIN_AUTH_TOKEN'] = 'SomeToken'
 require File.expand_path('../../../lib/server', __FILE__)
 
 Before do
