@@ -3,7 +3,7 @@ module ServiceHealthRegistry
     class << self
       @@services = {}
 
-      def [](service_name)
+      def find(service_name)
         raise ServiceHealthRegistry::ServiceNotFoundError.new("#{service_name} does not exist") unless @@services.has_key? service_name
 
         @@services[service_name]

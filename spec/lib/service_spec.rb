@@ -23,7 +23,7 @@ RSpec.describe ServiceHealthRegistry::Service do
         ServiceHealthRegistry::Service.register(service_object)
       end
 
-      subject { ServiceHealthRegistry::Service[service_object.name] }
+      subject { ServiceHealthRegistry::Service.find(service_object.name) }
 
       it 'creates the service' do
         expect(subject).to eq(service_object)
@@ -35,7 +35,7 @@ RSpec.describe ServiceHealthRegistry::Service do
     end
   end
 
-  describe '.[](service_name)' do
+  describe '.find(service_name)' do
     let(:service) { ServiceHealthRegistry::Service.new('MyService') }
 
     context 'when a service exists with the supplied name' do
@@ -44,13 +44,13 @@ RSpec.describe ServiceHealthRegistry::Service do
       end
 
       it 'returns the service object' do
-        expect(ServiceHealthRegistry::Service[service.name]).to eq(service)
+        expect(ServiceHealthRegistry::Service.find(service.name)).to eq(service)
       end
     end
 
     context 'when a service does NOT exist with the supplied name' do
       it 'raises a ServiceHealthRegistry::ServiceNotFoundError' do
-        expect { ServiceHealthRegistry::Service['someNonExistantService'] }.to raise_error(ServiceHealthRegistry::ServiceNotFoundError)
+        expect { ServiceHealthRegistry::Service.find('someNonExistantService') }.to raise_error(ServiceHealthRegistry::ServiceNotFoundError)
       end
     end
   end
