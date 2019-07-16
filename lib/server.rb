@@ -34,11 +34,11 @@ module ServiceHealthRegistry
       response_payload.to_json
     end
 
-    get '/get/:app_name/:sensor_name' do
-      'TBC'
+    get '/get/:service_name/:sensor_name' do
+      
     end
 
-    post '/set/:app_name/:sensor_name' do
+    post '/set/:service_name/:sensor_name' do
     end
 
     private
