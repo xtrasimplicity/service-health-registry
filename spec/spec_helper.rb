@@ -16,6 +16,7 @@
 
 
 ENV['RACK_ENV'] = 'test'
+ENV['ADMIN_AUTH_TOKEN'] = 'SomeSecretToken'
 
 require 'simplecov'
 SimpleCov.start

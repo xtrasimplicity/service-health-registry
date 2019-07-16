@@ -35,10 +35,22 @@ module ServiceHealthRegistry
     end
 
     get '/get/:service_name/:sensor_name' do
-      
+      sensor = load_sensor
+
+      if sensor.healthy?
+        status 200
+      else
+        status 422
+      end
     end
 
     post '/set/:service_name/:sensor_name' do
+      sensor = load_sensor
+      is_healthy = params[:status].to_s =~ /\Ahealthy\Z/i
+
+      sensor.set_health_status(is_healthy)
+
+      status 200
     end
 
     private
@@ -49,6 +61,15 @@ module ServiceHealthRegistry
       if supplied_auth_token != settings.admin_authentication_token
         halt 403, {'Content-Type' => 'application/json'}, { status: :unauthorised }.to_json
       end
+    end
+
+    def load_sensor
+      service_name = params[:service_name]
+      sensor_name = params[:sensor_name]
+
+      service = ServiceHealthRegistry::Service.find(service_name)
+      
+      service.get_sensor(sensor_name)
     end
   end
 end
