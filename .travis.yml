@@ -1,0 +1,15 @@
+language: ruby
+services:
+  - docker
+
+before_script:
+  - docker-compose build
+  - cp .env.sample .env
+  - docker-compose up -d
+
+script:
+  - docker-compose exec app /bin/sh -c "cd /app && bundle exec rake"
+
+
+after_script:
+  - docker-compose down --volumes

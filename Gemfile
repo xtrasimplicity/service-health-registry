@@ -13,4 +13,5 @@ group :test do
   gem 'rest-client'
   gem 'rspec'
   gem 'simplecov'
+  gem 'rake'
 end

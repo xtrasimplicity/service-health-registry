@@ -4,5 +4,7 @@ services:
   app:
     image: xtrasimplicity/service-health-registry
     build: .
+    environment:
+      ADMIN_AUTH_TOKEN:
     ports:
       - 4567:4567
