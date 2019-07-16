@@ -2,6 +2,9 @@ language: ruby
 services:
   - docker
 
+before_install:
+  - gem install bundler
+
 before_script:
   - docker-compose build
   - cp .env.sample .env
