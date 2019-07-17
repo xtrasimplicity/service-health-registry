@@ -24,6 +24,7 @@ module ServiceHealthRegistry
         
         status 200
         response_payload[:status] = :ok
+        response_payload[:AuthToken] = new_service.authentication_token
       rescue ServiceAlreadyExistsError => e
         status 422
         response_payload[:status] = :error

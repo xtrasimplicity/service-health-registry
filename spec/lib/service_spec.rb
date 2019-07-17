@@ -21,7 +21,11 @@ RSpec.describe ServiceHealthRegistry::Service do
     end
 
     context 'when a service does NOT exist with this name' do
+      let(:stubbed_auth_token) { SecureRandom.hex(12) }
+
       before do
+        expect(SecureRandom).to receive(:hex).with(12).and_return(stubbed_auth_token)
+
         ServiceHealthRegistry::Service.register(service_object)
       end
 
@@ -33,6 +37,10 @@ RSpec.describe ServiceHealthRegistry::Service do
 
       it 'initialises the sensors' do
         expect(subject.sensors).to eq({})
+      end
+
+      it 'generates an authentication token for this service' do
+        expect(subject.authentication_token).to eq(stubbed_auth_token)
       end
     end
   end

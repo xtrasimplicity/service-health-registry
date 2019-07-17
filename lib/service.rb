@@ -22,11 +22,12 @@ module ServiceHealthRegistry
       end
     end
 
-    attr_reader :name, :sensors
+    attr_reader :name, :sensors, :authentication_token
 
     def initialize(name)
       @name = name
       @sensors = {}
+      @authentication_token = SecureRandom.hex(12)
     end
 
     def register_sensor(sensor_name)

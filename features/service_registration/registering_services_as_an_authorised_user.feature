@@ -5,6 +5,7 @@ Feature: Registering services as an authorised user
     Given the admin authentication token is 'SomeSecretToken'
     And I set the X-AuthToken header value to 'SomeSecretToken'
 
+  @stub-service-registration-auth-token
   Scenario: The service does not exist
     Given there isn't a registered service named 'MyService'
     When I send a POST request to '/register_service' with a JSON payload of:
@@ -14,7 +15,7 @@ Feature: Registering services as an authorised user
     Then it should return a HTTP status of 200
     And it should return a JSON payload of:
     """
-    {"status": "ok"}
+    {"status": "ok", "AuthToken": "MySecretServiceSpecificToken"}
     """
 
   Scenario: The service already exists
