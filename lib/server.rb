@@ -63,7 +63,7 @@ module ServiceHealthRegistry
       supplied_auth_token = request.get_header('HTTP_X_AUTHTOKEN')
 
       if supplied_auth_token != desired_token_value
-        halt 403, {'Content-Type' => 'application/json'}, { status: :unauthorised }.to_json
+        abort_request_and_return(403, { status: :unauthorised }.to_json, {'Content-Type' => 'application/json'})
       end
     end
 
