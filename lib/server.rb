@@ -69,13 +69,22 @@ module ServiceHealthRegistry
 
     def load_service
       service_name = params[:service_name]
+
+      begin
       ServiceHealthRegistry::Service.find(service_name)
+      rescue ServiceNotFoundError => e
+        abort_request_and_return(422, e.message)
+      end
     end
 
     def load_sensor(service = nil)
       sensor_name = params[:sensor_name]
       service ||= load_service
       service.get_sensor(sensor_name)
+    end
+
+    def abort_request_and_return(status_code, response_body, headers = {'Content-Type' => 'text/html'})
+      halt status_code, headers, response_body
     end
   end
 end

@@ -24,3 +24,7 @@ Then("it should return a JSON payload of:") do |stringified_json_payload|
   
   expect(actual_payload).to eq(expected_payload)
 end
+
+Then("the page should include:") do |text|
+  expect(@http_request.body).to include(text)
+end
