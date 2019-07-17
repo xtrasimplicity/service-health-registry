@@ -1,8 +1,10 @@
-Feature: Updating a sensor's status
+@stub-service-registration-auth-token
+Feature: Updating a sensor's status when a valid service-specific X-AuthToken header is supplied
   Background:
     Given the admin authentication token is 'SomeSecretToken'
     And I set the X-AuthToken header value to 'SomeSecretToken'
     And I have registered a service named 'app_name'
+    And I set the X-AuthToken header value to 'MySecretServiceSpecificToken'
 
   Scenario: Setting the service's status to `healthy`
   Given I send a POST request to '/set/app_name/sensor_name' with a JSON payload of:

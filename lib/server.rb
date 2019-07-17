@@ -13,7 +13,7 @@ module ServiceHealthRegistry
     end
 
     post '/register_service' do
-      verify_admin_auth_token!
+      verify_auth_token_or_raise_403!(settings.admin_authentication_token)
 
       service_name = params[:name]
       response_payload = {}
@@ -46,7 +46,10 @@ module ServiceHealthRegistry
     end
 
     post '/set/:service_name/:sensor_name' do
-      sensor = load_sensor
+      service = load_service
+      verify_auth_token_or_raise_403!(service.authentication_token)
+
+      sensor = load_sensor(service)
       is_healthy = params[:status].to_s =~ /\Ahealthy\Z/i
 
       sensor.set_health_status(is_healthy)
@@ -56,20 +59,22 @@ module ServiceHealthRegistry
 
     private
 
-    def verify_admin_auth_token!
+    def verify_auth_token_or_raise_403!(desired_token_value)
       supplied_auth_token = request.get_header('HTTP_X_AUTHTOKEN')
 
-      if supplied_auth_token != settings.admin_authentication_token
+      if supplied_auth_token != desired_token_value
         halt 403, {'Content-Type' => 'application/json'}, { status: :unauthorised }.to_json
       end
     end
 
-    def load_sensor
+    def load_service
       service_name = params[:service_name]
-      sensor_name = params[:sensor_name]
+      ServiceHealthRegistry::Service.find(service_name)
+    end
 
-      service = ServiceHealthRegistry::Service.find(service_name)
-      
+    def load_sensor(service = nil)
+      sensor_name = params[:sensor_name]
+      service ||= load_service
       service.get_sensor(sensor_name)
     end
   end
