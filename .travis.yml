@@ -7,7 +7,6 @@ rvm:
 
 before_install:
   - gem install bundler
-  - bundle install
 
 env:
   - ADMIN_AUTH_TOKEN=MySecretAuthToken
