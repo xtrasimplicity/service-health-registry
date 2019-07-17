@@ -1,6 +1,9 @@
 FROM ruby:2.6-alpine
+
+RUN apk add --no-cache g++ make && \
+    gem install bundler
+
 WORKDIR /app
-RUN gem install bundler
 
 COPY Gemfile* /app/
 RUN bundle install --without test
