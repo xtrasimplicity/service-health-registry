@@ -71,6 +71,10 @@ module ServiceHealthRegistry
       status 200
     end
 
+    get '*' do
+      'Ooops! It looks like you forgot to specify a valid endpoint, or have used the wrong HTTP method?'
+    end
+
     private
 
     def verify_auth_token_or_raise_403!(desired_token_value)
@@ -85,7 +89,7 @@ module ServiceHealthRegistry
       service_name = params[:service_name]
 
       begin
-      ServiceHealthRegistry::Service.find(service_name)
+        ServiceHealthRegistry::Service.find(service_name)
       rescue ServiceNotFoundError => e
         abort_request_and_return(422, { status: :error, message: e.message}.to_json)
       end
