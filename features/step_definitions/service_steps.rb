@@ -1,7 +1,7 @@
 Given("I have registered a service named {string}") do |name|
-  service = ServiceHealthRegistry::Service.new(name)
+  @service = ServiceHealthRegistry::Service.new(name)
 
-  ServiceHealthRegistry::Service.register(service)
+  ServiceHealthRegistry::Service.register(@service)
 end
 
 Given("there isn't a registered service named {string}") do |name|
