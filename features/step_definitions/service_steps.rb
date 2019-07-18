@@ -1,9 +1,7 @@
 Given("I have registered a service named {string}") do |name|
-  payload = { name: name }
+  service = ServiceHealthRegistry::Service.new(name)
 
-  @http_headers ||= {}
-
-  @http_request = post_request('/register_service', payload, @http_headers)
+  ServiceHealthRegistry::Service.register(service)
 end
 
 Given("there isn't a registered service named {string}") do |name|

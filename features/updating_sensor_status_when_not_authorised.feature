@@ -1,8 +1,6 @@
 Feature: Updating a sensor's status when a valid service-specific X-AuthToken header is not supplied
   Background:
-    Given the admin authentication token is 'SomeSecretToken'
-    And I set the X-AuthToken header value to 'SomeSecretToken'
-    And I have registered a service named 'app_name'
+    Given I have registered a service named 'app_name'
 
   Scenario: When the X-AuthToken header is not supplied
   When I send a POST request to '/set/app_name/sensor_name' with a JSON payload of:
