@@ -35,6 +35,7 @@ GEM
     multi_test (0.1.2)
     mustermann (1.0.3)
     netrc (0.11.0)
+    puma (3.12.1)
     rack (2.0.7)
     rack-protection (2.0.5)
       rack
@@ -78,6 +79,7 @@ DEPENDENCIES
   byebug
   cucumber
   json
+  puma
   rake
   rest-client
   rspec

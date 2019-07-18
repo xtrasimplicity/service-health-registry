@@ -12,4 +12,4 @@ COPY . /app
 
 EXPOSE 4567
 
-CMD ["/usr/bin/env", "ruby", "/app/application.rb"]
+CMD ["/usr/bin/env", "ruby", "/app/application.rb", "-s puma"]
