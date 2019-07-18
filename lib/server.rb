@@ -9,6 +9,7 @@ module ServiceHealthRegistry
   class Server < Sinatra::Base
     configure do
       set :bind, '0.0.0.0'
+      set :environment, ENV.fetch('RACK_ENV') { 'production' }
       set :admin_authentication_token, ENV.fetch('ADMIN_AUTH_TOKEN') { abort 'ERROR: The ADMIN_AUTH_TOKEN environment variable must be set!' }
     end
 
