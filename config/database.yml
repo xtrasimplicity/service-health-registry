@@ -1,0 +1,16 @@
+default: &default
+  adapter: mysql2
+  database: <%= ENV.fetch('DATABASE_NAME') { raise 'The DATABASE_NAME environment variable must be set' } %>
+  pool: 5
+  username: <%= ENV.fetch('DATABASE_USERNAME') { raise 'The DATABASE_USERNAME environment variable must be set' } %>
+  password: <%= ENV.fetch('DATABASE_PASSWORD') { nil } %>
+
+test:
+  <<: *default
+  database: service_health_registry_test
+
+development:
+  <<: *default
+
+production:
+  <<: *default

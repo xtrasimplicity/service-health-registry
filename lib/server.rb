@@ -1,5 +1,11 @@
 require 'bundler/setup'
 bundle_environments = [:default, ENV['RACK_ENV']].reject(&:nil?)
+
+if Bundler.setup(*bundle_environments).gems.map(&:name).include?('dotenv')
+  require 'dotenv/load'
+end
+
+require 'sinatra/activerecord'
 Bundler.require(*bundle_environments)
 
 module ServiceHealthRegistry

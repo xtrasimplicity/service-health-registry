@@ -1,7 +1,7 @@
 #!/usr/bin/env rake
 require 'rake'
-
 require File.expand_path('../lib/server', __FILE__)
+require 'sinatra/activerecord/rake'
 
 begin
   require 'rspec/core/rake_task'
