@@ -1,11 +1,15 @@
 module ServiceHealthRegistry
-  class Service
-    attr_reader :name, :sensors, :authentication_token
+  class Service < ActiveRecord::Base
+    attr_reader :sensors
 
     def initialize(name)
-      @name = name
+      attrs = {
+        name: name,
+        authentication_token: SecureRandom.hex(12)
+      }
+
+      super(attrs)
       @sensors = {}
-      @authentication_token = SecureRandom.hex(12)
     end
 
     def register_sensor(sensor_name)
