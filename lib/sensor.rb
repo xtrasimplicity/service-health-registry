@@ -7,7 +7,7 @@ module ServiceHealthRegistry
       @healthy = false
     end
 
-    def set_health_status(healthy)
+    def set_health_status!(healthy)
       @healthy = healthy
       @last_updated_at = DateTime.now
     end

@@ -1,23 +1,20 @@
 module ServiceHealthRegistry
-  class Sensor
-    attr_reader :name, :last_updated_at
-    
+  class Sensor < ActiveRecord::Base
     def initialize(name)
-      @name = name
-      @healthy = false
+      attrs = {
+        name: name,
+        healthy: false
+      }
+
+      super(attrs)
     end
 
-    def set_health_status(healthy)
-      @healthy = healthy
-      @last_updated_at = DateTime.now
-    end
-
-    def healthy?
-      @healthy
+    def set_health_status!(healthy)
+      update_attributes!(healthy: healthy, last_updated_at: DateTime.now)
     end
 
     def has_received_data?
-      !@last_updated_at.nil?
+      !last_updated_at.nil?
     end
   end
 end

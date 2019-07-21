@@ -117,3 +117,5 @@ Shoulda::Matchers.configure do |config|
     with.library :active_model
   end
 end
+
+Dir.glob('support/**/*.rb') { |rb| require rb }

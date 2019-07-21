@@ -71,9 +71,9 @@ module ServiceHealthRegistry
       verify_auth_token_or_raise_403!(service.authentication_token)
 
       sensor = load_sensor(service)
-      is_healthy = params[:status].to_s =~ /\Ahealthy\Z/i
+      is_healthy = !!(params[:status].to_s =~ /\Ahealthy\Z/i)
 
-      sensor.set_health_status(is_healthy)
+      sensor.set_health_status!(is_healthy)
 
       status 200
     end

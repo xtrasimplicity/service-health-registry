@@ -1,10 +1,15 @@
 require 'spec_helper'
 
 RSpec.describe ServiceHealthRegistry::Service, type: :model do
-  subject { ServiceHealthRegistry::Service.new('myService') }
+  subject { ServiceHealthRegistry::Service.create('myService') }
 
   it { is_expected.to validate_uniqueness_of(:name) }
   it { is_expected.to validate_presence_of(:name) }
+  it { is_expected.to have_many(:sensors) }
+
+  before do
+    ServiceHealthRegistry::ServiceRepository.destroy_all!
+  end
 
   describe '#new' do
     it 'stores the service name' do
@@ -13,12 +18,6 @@ RSpec.describe ServiceHealthRegistry::Service, type: :model do
       subject = ServiceHealthRegistry::Service.new(expected_name)
 
       expect(subject.name).to eq(expected_name)
-    end
-
-    it 'defaults #sensors to an empty hash' do
-      subject = ServiceHealthRegistry::Service.new('name')
-
-      expect(subject.sensors).to eq({})
     end
   end
 
@@ -48,17 +47,18 @@ RSpec.describe ServiceHealthRegistry::Service, type: :model do
 
         expect(actual_sensor).to be_a_kind_of(ServiceHealthRegistry::Sensor)
         expect(actual_sensor.name).to eq(sensor_name)
+        expect(actual_sensor.persisted?).to eq(true)
       end
     end
   end
 
   describe '#get_sensor' do
-    let(:sensor) { ServiceHealthRegistry::Sensor.new('myNewSensor').tap { |s| s.set_health_status(true) } }
+    let(:sensor) { ServiceHealthRegistry::Sensor.new('myNewSensor').tap { |s| s.set_health_status!(true) } }
 
     context 'when a sensor exists with the supplied name' do
       before do
         subject.register_sensor(sensor.name)
-        subject.get_sensor(sensor.name).set_health_status(sensor.healthy?)
+        subject.get_sensor(sensor.name).set_health_status!(sensor.healthy?)
       end
 
       it 'returns the sensor object' do

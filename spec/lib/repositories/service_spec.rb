@@ -34,10 +34,6 @@ RSpec.describe ServiceHealthRegistry::ServiceRepository do
         expect(subject.persisted?).to eq(true)
       end
 
-      it 'initialises the sensors' do
-        expect(subject.sensors).to eq({})
-      end
-
       it 'generates an authentication token for this service' do
         expect(subject.authentication_token).to eq(stubbed_auth_token)
       end

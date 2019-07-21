@@ -21,4 +21,5 @@ group :test, :development do
   gem 'rake'
   gem 'dotenv', require: false
   gem 'shoulda-matchers'
+  gem 'database_cleaner'
 end
