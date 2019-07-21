@@ -1,9 +1,10 @@
 require 'spec_helper'
 
-RSpec.describe ServiceHealthRegistry::Service do
+RSpec.describe ServiceHealthRegistry::Service, type: :model do
   subject { ServiceHealthRegistry::Service.new('myService') }
 
- 
+  it { is_expected.to validate_uniqueness_of(:name) }
+  it { is_expected.to validate_presence_of(:name) }
 
   describe '#new' do
     it 'stores the service name' do

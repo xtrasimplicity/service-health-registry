@@ -31,6 +31,7 @@ RSpec.describe ServiceHealthRegistry::ServiceRepository do
 
       it 'creates the service' do
         expect(subject).to eq(service_object)
+        expect(subject.persisted?).to eq(true)
       end
 
       it 'initialises the sensors' do

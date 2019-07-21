@@ -1,21 +1,26 @@
 module ServiceHealthRegistry
   module ServiceRepository
-    @@services = {}
 
     def self.find(service_name)
-      raise ServiceHealthRegistry::ServiceNotFoundError.new("#{service_name} does not exist") unless @@services.has_key? service_name
+      raise ServiceHealthRegistry::ServiceNotFoundError.new("#{service_name} does not exist") unless service_exists?(service_name)
 
-        @@services[service_name]
+      Service.find_by(name: service_name)
     end
 
     def self.register(service)
-      raise ServiceHealthRegistry::ServiceAlreadyExistsError.new("#{service.name} already exists") if @@services.has_key? service.name
+      raise ServiceHealthRegistry::ServiceAlreadyExistsError.new("#{service.name} already exists") if service_exists?(service.name)
 
-        @@services[service.name] = service
+      service.save!
     end
 
     def self.destroy_all!
-      @@services = {}
+      Service.destroy_all
+    end
+
+    private
+
+    def self.service_exists?(service_name)
+      !Service.find_by(name: service_name).nil?
     end
   end
 end

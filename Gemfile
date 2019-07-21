@@ -20,4 +20,5 @@ group :test, :development do
   gem 'simplecov'
   gem 'rake'
   gem 'dotenv', require: false
+  gem 'shoulda-matchers'
 end
