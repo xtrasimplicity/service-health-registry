@@ -10,7 +10,8 @@ Bundler.require(*bundle_environments)
 
 module ServiceHealthRegistry
   require_relative 'errors'
-  require_relative 'service'
+  require_relative 'models'
+  require_relative 'repositories'
 
   class Server < Sinatra::Base
     configure do
@@ -27,7 +28,7 @@ module ServiceHealthRegistry
       
       begin
         new_service = ServiceHealthRegistry::Service.new(service_name)
-        ServiceHealthRegistry::Service.register(new_service)
+        ServiceHealthRegistry::ServiceRepository.register(new_service)
         
         status 200
         response_payload[:status] = :ok
@@ -95,7 +96,7 @@ module ServiceHealthRegistry
       service_name = params[:service_name]
 
       begin
-        ServiceHealthRegistry::Service.find(service_name)
+        ServiceHealthRegistry::ServiceRepository.find(service_name)
       rescue ServiceNotFoundError => e
         abort_request_and_return(422, { status: :error, message: e.message}.to_json)
       end
