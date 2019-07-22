@@ -1,6 +1,6 @@
 FROM ruby:2.6-alpine
 
-RUN apk add --no-cache g++ make && \
+RUN apk add --no-cache g++ make mariadb-dev mariadb-client && \
     gem install bundler
 
 WORKDIR /app

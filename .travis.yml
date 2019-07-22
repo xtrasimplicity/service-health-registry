@@ -1,16 +1,12 @@
-language: ruby
-rvm:
-  - 2.3
-  - 2.4
-  - 2.5
-  - 2.6
+services:
+  - docker
 
 before_install:
-  - gem update --system
   - gem install bundler
 
-env:
-  - ADMIN_AUTH_TOKEN=MySecretAuthToken
+before_script:
+  - docker-compose build
+  - cp .env.sample .env
 
 script:
-  - bundle exec rake
+  - docker-compose run app /bin/sh -c "bundle install && rake ci"

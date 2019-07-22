@@ -1,13 +1,31 @@
 ---
 version: '3'
 services:
+  db:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_USER: ${DATABASE_USERNAME}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    volumes:
+      - db:/var/lib/mysql
+
   app:
     image: xtrasimplicity/service-health-registry
     build: .
     environment:
       ADMIN_AUTH_TOKEN:
+      DATABASE_HOST: db
       DATABASE_NAME:
       DATABASE_USERNAME:
       DATABASE_PASSWORD:
+    depends_on:
+      - db
     ports:
       - 4567:4567
+
+volumes:
+  db:
