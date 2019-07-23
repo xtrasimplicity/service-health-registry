@@ -31,8 +31,10 @@ module ServerManager
     
       begin
         Timeout::timeout(30) do
+          puts "Waiting for server to start...\n"
+
           until system("nc -z localhost #{ServiceHealthRegistry::Server.port}") 
-            puts "Waiting for server to start..."
+            print "."
           end
         end
       rescue Timeout::Error
