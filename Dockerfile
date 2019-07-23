@@ -6,7 +6,7 @@ RUN apk add --no-cache g++ make mariadb-dev mariadb-client && \
 WORKDIR /app
 
 COPY Gemfile* /app/
-RUN bundle install --without test
+RUN bundle install --without test,development
 
 COPY . /app
 
