@@ -47,3 +47,5 @@ curl -X GET \
 # Response
 {"status":"error","message":"sensor is unhealthy"}
 ```
+In addition to the JSON response, the server will also return different HTTP status codes to denote different scenarios. A HTTP response code of `422` denotes that the sensor is **unhealthy**, whereas a HTTP status code of `200` denotes that the sensor is **healthy**.
+
