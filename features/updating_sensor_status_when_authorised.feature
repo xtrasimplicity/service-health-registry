@@ -20,3 +20,6 @@ Feature: Updating a sensor's status when a valid service-specific X-AuthToken he
   """
   And I visit '/get/app_name/sensor_name'
   Then it should return a HTTP status of 422
+
+  @wip
+  Scenario: Setting the sensor's heartbeat interval
