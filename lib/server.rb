@@ -54,8 +54,10 @@ module ServiceHealthRegistry
       else
         response_payload[:status] = :error
         status 422
-
-        if sensor.has_received_data?
+        
+        if sensor.has_heartbeat_expired?
+          response_payload[:message] = "sensor has not received any data in the past #{sensor.heartbeat_interval} seconds"
+        elsif sensor.has_received_data?
           response_payload[:message] = 'sensor is unhealthy'
         else
           response_payload[:message] = 'sensor has not received any data'

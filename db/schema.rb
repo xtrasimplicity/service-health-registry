@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_21_084725) do
+ActiveRecord::Schema.define(version: 2019_07_23_203102) do
 
   create_table "sensors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "service_id"
     t.string "name", null: false
     t.boolean "healthy", default: false
     t.datetime "last_updated_at"
+    t.integer "heartbeat_interval"
     t.index ["service_id", "name"], name: "index_sensors_on_service_id_and_name", unique: true
     t.index ["service_id"], name: "index_sensors_on_service_id"
   end

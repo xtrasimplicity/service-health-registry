@@ -16,5 +16,27 @@ module ServiceHealthRegistry
     def has_received_data?
       !last_updated_at.nil?
     end
+
+    def healthy?
+      return false unless healthy
+
+      !has_heartbeat_expired?
+    end
+
+    def set_heartbeat_interval!(interval)
+      update_attributes!(heartbeat_interval: interval)
+    end
+
+    def has_heartbeat_expired?
+      return false unless heartbeat_interval && last_updated_at
+
+      heartbeat_interval && !has_received_data_in_last?(heartbeat_interval.seconds)
+    end
+
+    private
+
+    def has_received_data_in_last?(interval)
+      DateTime.now <= (last_updated_at + interval)
+    end
   end
 end
