@@ -1,4 +1,7 @@
 Feature: Querying sensor statuses
+  Background:
+    Given the server is running
+
   Scenario: The service does not exist
   When I visit '/get/app_name/sensor_name'
   Then it should return a HTTP status of 422

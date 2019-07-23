@@ -1,6 +1,7 @@
 Feature: Registering services when not authorised
   Background:
     Given the admin authentication token is '296F9d39X14349zeb10'
+    And the server is running
 
   Scenario: Without providing an X-AuthToken header
     Given there isn't a registered service named 'MyService'
