@@ -9,4 +9,4 @@ before_script:
   - cp .env.sample .env
 
 script:
-  - docker-compose run app /bin/sh -c "bundle install && rake ci"
+  - docker-compose run app /bin/sh -c "bundle config unset without && install && rake ci"

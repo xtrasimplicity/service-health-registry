@@ -12,10 +12,10 @@ USER registry
 ENV GEM_HOME /app/vendor/bundle
 ENV GEM_PATH "${GEM_HOME}:/usr/local/bundle"
 ENV BUNDLE_APP_CONFIG "${GEM_HOME}"
-ENV BUNDLE_WITHOUT "test development"
 
 COPY --chown=registry:registry Gemfile* /app/
-RUN bundle install
+RUN bundle config set without 'test:development' && \
+    bundle install
 
 COPY --chown=registry:registry . /app
 
