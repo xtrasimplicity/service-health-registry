@@ -18,7 +18,6 @@ group :test, :development do
   gem 'rest-client'
   gem 'rspec'
   gem 'simplecov'
-  gem 'rake'
   gem 'dotenv', require: false
   gem 'shoulda-matchers'
   gem 'database_cleaner'
