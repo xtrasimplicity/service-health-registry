@@ -84,6 +84,10 @@ module ServiceHealthRegistry
       'Ooops! It looks like you forgot to specify a valid endpoint, or have used the wrong HTTP method?'
     end
 
+    error do
+      abort_request_and_return 500, { status: :error, message: 'An unexpected error occurred.' }.to_json
+    end
+
     private
 
     def verify_auth_token_or_raise_403!(desired_token_value)
