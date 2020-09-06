@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe ServiceHealthRegistry::Service, type: :model do
   subject { ServiceHealthRegistry::Service.create('myService') }
 
-  it { is_expected.to validate_uniqueness_of(:name) }
+  it { is_expected.to validate_uniqueness_of(:name).case_insensitive }
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to have_many(:sensors) }
 

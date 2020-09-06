@@ -2,7 +2,7 @@ module ServiceHealthRegistry
   class Service < ActiveRecord::Base
     has_many :sensors
 
-    validates :name, uniqueness: true, presence: true
+    validates :name, uniqueness: { case_sensitive: false }, presence: true
 
     def initialize(name)
       attrs = {
