@@ -4,16 +4,21 @@ RUN apk add --no-cache g++ make mariadb-dev mariadb-client && \
     gem install bundler && \
     addgroup registry && \
     adduser --disabled-password --ingroup registry \
-            --no-create-home registry
+            -h /app registry
 
 WORKDIR /app
+USER registry
 
-COPY Gemfile* /app/
-RUN bundle install --without test,development
+ENV GEM_HOME /app/vendor/bundle
+ENV GEM_PATH "${GEM_HOME}:/usr/local/bundle"
+ENV BUNDLE_APP_CONFIG "${GEM_HOME}"
+ENV BUNDLE_WITHOUT "test development"
 
-COPY . /app
+COPY --chown=registry:registry Gemfile* /app/
+RUN bundle install
+
+COPY --chown=registry:registry . /app
 
 EXPOSE 4567
-USER registry
 
 CMD ["/usr/bin/env", "ruby", "/app/application.rb", "-s puma"]
