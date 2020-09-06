@@ -10,7 +10,7 @@ module ServiceHealthRegistry
     end
 
     def set_health_status!(healthy)
-      update_attributes!(healthy: healthy, last_updated_at: DateTime.now)
+      update!(healthy: healthy, last_updated_at: DateTime.now)
     end
 
     def has_received_data?
@@ -24,7 +24,7 @@ module ServiceHealthRegistry
     end
 
     def set_heartbeat_interval!(interval)
-      update_attributes!(heartbeat_interval: interval)
+      update!(heartbeat_interval: interval)
     end
 
     def has_heartbeat_expired?
